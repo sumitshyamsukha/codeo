@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+import subprocess
+from flask import Flask
+from flask import render_template
+from flask import request
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return render_template('index.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        code = request.form['code']
+        file = open("test.py", "w")
+        file.write(code)
+        file.close()
+        output = subprocess.Popen(["python", "test.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+	fix = output[0].split("\n")
+	err = output[1]
+        #fix = output[0].decode('ascii')
+        #err = output[1].decode('ascii')
+        if fix is not None and fix!='':
+        	return render_template("login.html", code=fix)
+        if err is not None:
+        	return render_template("login.html", code=err)
+
+if __name__ == '__main__':
+    app.run()

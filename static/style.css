@@ -1,0 +1,53 @@
+#code { 
+  margin-top: 5px;
+  height: 500px;
+  width: 350px;
+  position: center;
+}
+
+.full {
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    position: fixed;
+}
+
+#languages {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+#stdin {
+	width: 1000px;
+	height: 100px;
+	margin-left: 15px;
+	margin-top: 15px;
+}
+
+#output p {
+  color: white;
+  font: monospace;
+}
+
+#output {
+	margin-left: 15px;
+	margin-top: 15px;
+	width: 1000px;
+	height: 100px;
+	background-color: black;
+}
+
+#result {
+  color: white;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
+#hidden {
+	display: none;
+}
+
+#submit {
+	margin: 15px;
+}

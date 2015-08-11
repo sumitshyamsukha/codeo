@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<title>Hello from Flask</title>
+ <body>
+ <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link href="{{ url_for('static', filename="style.css") }}" type="text/css" rel="stylesheet">
+ <div id="edit">
+  	<select id="languages">
+      <option value="java">Java</option>
+      <option value="python">Python</option>
+      <option value="python3">Python3</option>
+      <option value="c_cpp">CPP</option>
+    </select>
+    <select id="themes">
+        <option value="monokai">monokai</option>
+        <option value="vibrant_ink">vibrant_ink</option>
+        <option value="twilight">twilight</option>
+        <option value="clouds_midnight">clouds_midnight</option>
+        <option value="dreamweaver">dreamweaver</option>
+        <option value="pastel_on_dark">pastel_on_dark</option>
+        <option value="textmate">textmate</option>
+        <option value="clouds">clouds</option>
+        <option value="tomorrow_night_blue">tomorrow_night_blue</option>
+        <option value="crimson_editor">crimson_editor</option>
+        <option value="terminal">terminal</option>
+        <option value="merbivore_soft">merbivore_soft</option>
+        <option value="dawn">dawn</option>
+        <option value="chaos">chaos</option>
+        <option value="github">github</option>
+        <option value="katzenmilch">katzenmilch</option>
+        <option value="cobalt">cobalt</option>
+        <option value="iplastic">iplastic</option>
+        <option value="solarized_dark">solarized_dark</option>
+        <option value="idle_fingers">idle_fingers</option>
+        <option value="ambiance">ambiance</option>
+        <option value="xcode">xcode</option>
+        <option value="solarized_light">solarized_light</option>
+        <option value="eclipse">eclipse</option>
+        <option value="sqlserver">sqlserver</option>
+        <option value="tomorrow">tomorrow</option>
+        <option value="kuroir">kuroir</option>
+        <option value="merbivore">merbivore</option>
+        <option value="tomorrow_night_eighties">tomorrow_night_eighties</option>
+        <option value="chrome">chrome</option>
+        <option value="tomorrow_night">tomorrow_night</option>
+        <option value="mono_industrial">mono_industrial</option>
+        <option value="tomorrow_night_bright">tomorrow_night_bright</option>
+        <option value="kr_theme">kr_theme</option>
+    </select>
+    <button id="fullscreen" type="submit" value="fullscreen">Full Screen</button>
+  	<div id="code"></div>
+    </div>
+    <div>
+  	  	<textarea id="stdin"></textarea>
+  	  	<div id="output">
+  	  		<p> Output: </p>
+  	  		<p id="result"></p>
+  	  </div>
+    </div>
+<button id="submit" type="submit" value="Submit">Submit</button>
+
+<script src="{{ url_for('static', filename='bigscreen.min.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='src-noconflict/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+<script> 
+var code = ace.edit("code");
+var lang = 'java';
+ code.setOptions({
+  fontFamily: "inconsolata",
+  fontSize: "16px"
+	});
+ code.getSession().setUseWrapMode(true);
+ code.setTheme("ace/theme/monokai");
+ code.setPrintMarginColumn(false);
+ code.getSession().setMode("ace/mode/"+lang);
+$(function() {
+	$('#languages').click(function() {
+		lang = $('#languages').val();
+    code.getSession().setMode("ace/mode/"+lang);
+		if(lang==='python3')
+			code.getSession().setMode("ace/mode/python");
+	});
+});
+$(function() {
+  $('#themes').click(function() {
+    theme = $('#themes').val();
+    console.log(theme);
+    code.setTheme("ace/theme/"+theme);
+  });
+});
+$("#fullscreen").click(function() {
+    var element = $("#edit");
+    
+});
+ $(function() {
+    $('#submit').click(function() {
+    	var inputText = $('#stdin').val();
+    	$.ajax({
+    	type: 'POST', 
+    	contentType: 'application/json',
+    	data: JSON.stringify({text: code.getValue(), input: inputText, language: lang}),
+    	dataType: 'json',
+    	url: '/login',
+    	success: function(returned){
+    		$('#result').text(returned['val']);
+    	}
+    });
+  });
+});
+</script>
+</body>
+</html>

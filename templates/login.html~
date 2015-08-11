@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+<title>Hello from Flask</title>
+	<head></head>
+  <body>
+	{% for i in code %}
+	<p style="margin: 0 0 0 0;">{{ i }}</p>
+	{% endfor %}
+	</body>
+</html>
+
